@@ -23,6 +23,8 @@ import Icons from "views/Icons.jsx";
 import Maps from "views/Maps.jsx";
 import Notifications from "views/Notifications.jsx";
 import Upgrade from "views/Upgrade.jsx";
+import Product from 'views/Products';
+import Login from 'views/Login';
 
 const dashboardRoutes = [
   {
@@ -72,6 +74,20 @@ const dashboardRoutes = [
     name: "Notifications",
     icon: "pe-7s-bell",
     component: Notifications,
+    layout: "/admin"
+  },
+  {
+    path: "/products",
+    name: "Products",
+    icon: "pe-7s-bell",
+    component: Product,
+    layout: "/admin"
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "pe-7s-bell",
+    component: Login,
     layout: "/admin"
   },
   // {

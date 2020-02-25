@@ -91,7 +91,7 @@ class UserProfile extends Component {
                     <FormInputs
                       ncols={["col-md-12"]}
                       properties={[
-                        {
+                        { 
                           label: "Adress",
                           type: "text",
                           bsClass: "form-control",
