@@ -11,10 +11,13 @@ import FormInput from "components/FormInputs/FormInput.Component.jsx";
 import Button from "components/CustomButton/CustomButton.jsx";
 
 import { ApiCalls } from '../api/constants';
-import axios from 'axios';
-import { getAxios, postAxios } from '../api/baseApi';
+import { postAxios } from '../api/baseApi';
+import { connect } from 'react-redux';
+import { setCurrentUser } from '../redux/user/user.actions';
+import { decode } from 'jsonwebtoken';
 
 class Login extends Component {
+    
     state = {
         email: '',
         password: ''
@@ -26,13 +29,21 @@ class Login extends Component {
     };
 
     handleSubmit = async (event) => {
+        const { setCurrentUser } = this.props;
         event.preventDefault();
         const loginData = {
             email: this.state.email,
             password: this.state.password
         }
         const res = await postAxios(ApiCalls.login, loginData, '');
-        console.log('log from login call: ', res);
+        if (res.status === 200) {
+            const token = res.headers['x-auth-token'];
+            const decoded_token = decode(token);
+            setCurrentUser({user: decoded_token, token});
+        } else {
+            console.log('Login failed!');
+            //setCurrentUser({currentUser: ''});
+        }
     };
 
     render() {
@@ -105,4 +116,8 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(Login);
